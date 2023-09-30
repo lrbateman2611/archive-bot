@@ -1,0 +1,7 @@
+{
+  "name": "archive-bot",
+  "packageManager": "yarn@3.5.1",
+  "devDependencies": {
+    "eslint": "^8.50.0"
+  }
+}
