@@ -3,5 +3,12 @@
   "packageManager": "yarn@3.5.1",
   "devDependencies": {
     "eslint": "^8.50.0"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "deploy-commands": "node deploy-commands.js"
+  },
+  "dependencies": {
+    "discord.js": "^14.13.0"
   }
 }
