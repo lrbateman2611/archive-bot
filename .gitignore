@@ -13,3 +13,5 @@
 config.json
 
 .yarn/cache/
+
+node_modules/

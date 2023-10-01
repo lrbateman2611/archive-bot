@@ -2,13 +2,17 @@
   "name": "archive-bot",
   "packageManager": "yarn@3.5.1",
   "devDependencies": {
-    "eslint": "^8.50.0"
+    "@types/node": "^20.8.0",
+    "eslint": "^8.50.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2"
   },
   "scripts": {
-    "start": "node index.js",
-    "deploy-commands": "node deploy-commands.js"
+    "start": "ts-node src/Bot.ts",
+    "deploy-commands": "ts-node deploy-commands.js"
   },
   "dependencies": {
+    "@yarnpkg/plugin-typescript": "^4.0.0-rc.52",
     "discord.js": "^14.13.0"
   }
 }
