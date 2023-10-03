@@ -1,5 +1,6 @@
 import { CommandInteraction, Client, Interaction } from "discord.js";
 import { Commands } from "../commands";
+import { setTimeout } from "timers/promises";
 
 export default (client: Client): void => {
   client.on("interactionCreate", async (interaction: Interaction) => {
@@ -19,7 +20,7 @@ const handleSlashCommand = async (
     return;
   }
 
-  await interaction.deferReply();
+  await interaction.deferReply({ ephemeral: true });
 
   slashCommand.run(client, interaction);
 };
