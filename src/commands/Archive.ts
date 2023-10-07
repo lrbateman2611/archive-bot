@@ -43,16 +43,37 @@ export const Archive: Command = {
 
     const postId = postParts[postParts?.length - 1];
 
-    const message = await channel?.messages.fetch(postId);
+    try {
+      let message = await channel?.messages.fetch(postId);
+      if (!message) {
+        console.log("fetch message failed... trying again");
+        message = await channel?.messages.fetch(postId);
+      }
+      if (!message) {
+        console.log("fetch message failed... trying again");
+        message = await channel?.messages.fetch(postId);
+      }
+      if (!message) {
+        console.log("fetch message failed... closing thread");
+        response =
+          "Unable to find message. Maybe try again or tell Lucas the bot is failing EPICALLY!";
+        await interaction.editReply(response);
+        return;
+      }
+      console.log(`Archiving message with content: ${message.content}`);
+      console.log(`pulled id: ${postId}`);
+      console.log(`from channel: ${channel}`);
 
-    console.log(`Archiving message with content: ${message.content}`);
-    console.log(`pulled id: ${postId}`);
-    console.log(`from channel: ${channel}`);
+      message.content = tags + message.content;
 
-    message.content = tags + message.content;
+      await handlePostByType(message, client);
 
-    await handlePostByType(message, client);
-
-    await interaction.editReply(response);
+      await interaction.editReply(response);
+    } catch (err) {
+      console.log(`fetch failed due to error: ${err}`);
+      response = "fetchAPI failed due to an error! Cringe!";
+      await interaction.editReply(response);
+      return;
+    }
   },
 };
