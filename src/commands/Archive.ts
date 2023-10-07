@@ -38,7 +38,7 @@ export const Archive: Command = {
       return;
     }
     const channel = client.channels.cache.get(
-      interaction.channelId
+      postParts[postParts?.length - 2]
     ) as TextBasedChannel;
 
     const postId = postParts[postParts?.length - 1];
@@ -71,6 +71,10 @@ export const Archive: Command = {
       await interaction.editReply(response);
     } catch (err) {
       console.log(`fetch failed due to error: ${err}`);
+      console.log("Here is the postID that was fetched:");
+      console.log(`${postId}`);
+      console.log("Here is the channel received:");
+      console.log(`${channel}`);
       response = "fetchAPI failed due to an error! Cringe!";
       await interaction.editReply(response);
       return;
