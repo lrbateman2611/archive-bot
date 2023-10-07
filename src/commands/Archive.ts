@@ -46,15 +46,7 @@ export const Archive: Command = {
     try {
       let message = await channel?.messages.fetch(postId);
       if (!message) {
-        console.log("fetch message failed... trying again");
-        message = await channel?.messages.fetch(postId);
-      }
-      if (!message) {
-        console.log("fetch message failed... trying again");
-        message = await channel?.messages.fetch(postId);
-      }
-      if (!message) {
-        console.log("fetch message failed... closing thread");
+        console.log("fetch message failed");
         response =
           "Unable to find message. Maybe try again or tell Lucas the bot is failing EPICALLY!";
         await interaction.editReply(response);
