@@ -13,17 +13,29 @@ export const handlePostByType = async (
     archiveId
   )) as TextBasedChannel;
 
+  const urlWhitelist = [
+    "tiktok",
+    "youtube",
+    "youtu.be",
+    "v.redd.it",
+    "clips.twitch.tv",
+  ];
+
+  const containsWhitelistedURL = (content: string) => {
+    urlWhitelist.forEach((whitelistUrl) => {
+      if (content.includes(whitelistUrl)) {
+        return true;
+      }
+    });
+    return false;
+  };
+
   if (!archiveChannel) {
     console.log("archive channel not found");
     return;
   }
 
-  if (
-    pin.content.includes("http") &&
-    (pin.content.includes("tiktok") ||
-      pin.content.includes("youtube") ||
-      pin.content.includes("youtu.be"))
-  ) {
+  if (pin.content.includes("http") && containsWhitelistedURL(pin.content)) {
     // handle ytdl content
     console.log("linked content");
     await handleContentLink(pin, message, archiveChannel);
