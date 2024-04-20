@@ -22,12 +22,10 @@ export const handlePostByType = async (
   ];
 
   const containsWhitelistedURL = (content: string) => {
-    urlWhitelist.forEach((whitelistUrl) => {
-      if (content.includes(whitelistUrl)) {
-        return true;
-      }
-    });
-    return false;
+    console.log(content);
+    return urlWhitelist.some((whitelistedURL) =>
+      content.includes(whitelistedURL)
+    );
   };
 
   if (!archiveChannel) {
@@ -37,18 +35,15 @@ export const handlePostByType = async (
 
   if (pin.content.includes("http") && containsWhitelistedURL(pin.content)) {
     // handle ytdl content
-    console.log("linked content");
+    console.log("found: linked content");
     await handleContentLink(pin, message, archiveChannel);
   } else if (pin.attachments.size > 0) {
     // handle attached video/image
-    console.log("attachment content");
-    const attachmentLink = pin.attachments.first()?.url;
-    if (attachmentLink) {
-      await handleAttachment(pin, message, attachmentLink, archiveChannel);
-    }
+    console.log("found: attachment content");
+    await handleAttachment(pin, message, "", archiveChannel);
   } else {
     // handle text only
-    console.log("text only content");
+    console.log("found: text only content");
     message += pin.content;
     archiveChannel.send(message);
     pin.unpin("archived");
@@ -60,6 +55,7 @@ export const handleContentLink = async (
   message: string,
   archiveChannel: TextBasedChannel
 ) => {
+  console.log("Processing: linked content");
   const pinCopy = pin;
   const filePath = "yt-dlp/attachment.mp4";
 
@@ -96,7 +92,7 @@ export const handleAttachment = async (
   archiveChannel: TextBasedChannel,
   attachmentFile?: string
 ) => {
-  console.log("attachment content");
+  console.log("Processing: attachment content");
   message += pin.content;
   if (!attachmentFile) {
     attachmentFile = attachmentLink;
