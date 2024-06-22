@@ -1,4 +1,10 @@
-import { Client, Message, TextBasedChannel, messageLink } from "discord.js";
+import {
+  Attachment,
+  Client,
+  Message,
+  TextBasedChannel,
+  messageLink,
+} from "discord.js";
 import { ExecException, exec } from "node:child_process";
 import { archiveId } from "../../config.json";
 
@@ -115,10 +121,23 @@ export const handleAttachment = async (
     }
     pin.unpin("archived");
   } else {
-    console.log(`Error processing attachment: ${pin}`);
-    console.log("Attachment file:");
-    console.log(attachmentFile);
-    console.log("Attachment link:");
-    console.log(attachmentLink);
+    // Pin contains file attachments
+    if (pin.attachments.size > 0) {
+      let attachmentList: Attachment[] = [];
+      pin.attachments.forEach((attachment) => {
+        attachmentList.push(attachment);
+      });
+      try {
+        await archiveChannel.send({
+          files: attachmentList,
+          content: message,
+        });
+      } catch (e) {
+        // Unknown error
+        console.log(`Error with attachment content: ${e}`);
+      }
+      attachmentList = [];
+      pin.unpin("archived");
+    }
   }
 };
