@@ -41,7 +41,8 @@ export const handlePostByType = async (
 
   if (pin.content.includes("http") && containsWhitelistedURL(pin.content)) {
     // handle ytdl content
-    console.log("found: linked content");
+    console.log("found: linked content:");
+    console.log(pin.content);
     await handleContentLink(pin, message, archiveChannel);
   } else if (pin.attachments.size > 0) {
     // handle attached video/image
@@ -49,7 +50,9 @@ export const handlePostByType = async (
     await handleAttachment(pin, message, "", archiveChannel);
   } else {
     // handle text only
-    console.log("found: text only content");
+    console.log(`found: text only content: '${pin.content}' in pin:`);
+    console.log(pin);
+
     message += pin.content;
     archiveChannel.send(message);
     pin.unpin("archived");
