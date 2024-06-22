@@ -116,5 +116,9 @@ export const handleAttachment = async (
     pin.unpin("archived");
   } else {
     console.log(`Error processing attachment: ${pin}`);
+    console.log("Attachment file:");
+    console.log(attachmentFile);
+    console.log("Attachment link:");
+    console.log(attachmentLink);
   }
 };
