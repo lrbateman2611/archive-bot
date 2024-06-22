@@ -6,11 +6,12 @@
     "@types/node": "^20.8.0",
     "eslint": "^8.50.0",
     "ts-node": "^10.9.1",
+    "tsx": "^4.15.7",
     "typescript": "^5.2.2"
   },
   "scripts": {
-    "start": "ts-node --esm src/Bot.ts",
-    "deploy-commands": "ts-node --esm deploy-commands.js"
+    "start": "tsx src/Bot.ts",
+    "deploy-commands": "tsx deploy-commands.js"
   },
   "dependencies": {
     "@yarnpkg/plugin-typescript": "^4.0.0-rc.52",
