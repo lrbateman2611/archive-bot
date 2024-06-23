@@ -29,7 +29,6 @@ export const handlePostByType = async (
 
   const containsWhitelistedURL = (content: string) => {
     console.log(content);
-    let found = false;
     return urlWhitelist.some((whitelistedURL) => {
       if (content.includes(whitelistedURL)) {
         console.log(`URL matches whitelist: ${whitelistedURL}`);
