@@ -29,9 +29,14 @@ export const handlePostByType = async (
 
   const containsWhitelistedURL = (content: string) => {
     console.log(content);
-    return urlWhitelist.some((whitelistedURL) =>
-      content.includes(whitelistedURL)
-    );
+    let found = false;
+    return urlWhitelist.some((whitelistedURL) => {
+      if (content.includes(whitelistedURL)) {
+        console.log(`URL matches whitelist: ${whitelistedURL}`);
+        return true;
+      }
+      return false;
+    });
   };
 
   if (!archiveChannel) {
